@@ -1,0 +1,15 @@
+﻿(define (problem problem1)
+   (:domain blocks)
+   (:objects blockA blockB blockC)
+   (:init  
+        (ontable blockA) (ontable blockB) (ontable blockC)
+        (clear blockA) (clear blockB) (clear blockC)
+        (handempty)
+   )
+   (:goal (and 
+        (on blockA blockB)
+        (on blockB blockC)
+        (ontable blockC)
+        )
+   )
+)
