@@ -1,35 +1,23 @@
-# Building
 
-There is a building with N + 1 floors, numbered from 0 to N. 
-The building has *K*  fast (accelerating) elevators that stop only in floors that are multiple of M/ 2 (so *M* has to be an **even** number). Furthermore, within each building, there are *L* slow elevators, that stop at every floor of the building. 
+# BUILDING
 
-There are several persons, for which their current location (i. e., the floor they are) and their destination are given. The planning problem is to find a plan that moves the persons to their destinations while it minimizes the total duration.
+The problem has bee solved twice, once with numbers as real number and other time with objects as numbers.
 
-The actions are described next:
+## Numbers as numbers
 
-* Move up (lift, level1, level2): the lift moves up from level1 to level2. Model two actions, one for a fast lift and another one for a slow lift. The duration of the 2 actions should be given by a predicate. 
-* Move down (lift, level1, level2): the lift moves down from level1 to level2. Model two actions, one for a fast lift and another one for a slow lift.  The duration of the 2 actions should be given by a predicate.
-* Board (person, lift, level, num1, num2): the person boards on a level. The variable num1 specify the number of persons in the lift, and num2 is incremented in 1 when the person is boarded. The duration of the action is constant and equal to 1.
-* Leave (person, lift, level, num1, num2): the person leaves the lift on a floor level. The variable num1 specifies the number of persons in the lift, and num2 is decremented when the person leaves the lift. The duration of the action is constant and equal to 1.
+For this part the recommendations to solve the problem have not been followed.
+The lifts cannot move from any to any floor but from their current floor to the adjacent floors the lift type (fast or slow) can fo to.
 
-Note: Use objects (and not numbers) to treat the number of persons and the level floors. That is, define the following types:
+By using number for the capacity as well as to define the floor at which persons and lifts are domain and problem definition gets simplified.
+Nevertheless the planner became much more slower.
+The main problem of using numbers to define floors is that the current floor at which the lifts are is not shown on the plan output so it need to be tracked down from the movements that the lift performs.
 
-```pddl
-  (:types  
-    lift - object 
-    slowlift fastlift - lift
-    person - object
-    number - object
-  )
-```
+## Numbers as objects
 
-and in the initial state use the following for representing *level*, *num1* and *num2*:
+For this part the recommendations to solve the problem have been followed more than with the other.
+Instead of defining four action to move the lifts (UP_FAST, DOWN_FAST, UP_SLOW, DOWN_SLOW) juts one has been used.
+For the Board/Leaf actions the capacity of the lift is not show on the problem solution output.
 
-```pddl
-(:objects
-   n0 n1 n2 n3 n4 n5 n6 n7 n8  - number
-...
-)
-```
-
-Model two problems. The first one with 5 levels, 2 lifts of each type and 2 persons. The second problem has 9 levels, 4 persons and 2 lifts of each type.
+On the solution with numbers as object the domain and plan definition gets harder.
+Numbers instead of objects have been used to model the lift capacity.
+Also maximum and minimum capacities for each lift are used.
