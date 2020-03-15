@@ -7,6 +7,7 @@
   )
 
   (:init
+    (= (totalTime) 0)
     (= (maxFloors) 10)
 
     ;FAST
@@ -78,5 +79,5 @@
     (= (atFloorPerson P9) 1)
   ))
 
-  ;(:metric minimize (???))
+  (:metric minimize (totalTime))
 )

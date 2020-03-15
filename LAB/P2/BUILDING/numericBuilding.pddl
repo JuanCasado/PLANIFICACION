@@ -37,6 +37,7 @@
     (currentCapacity ?lift)
     (maxCapacity ?lift)
     (movement ?lift ?direction)
+    (totalTime)
   )
 
   (:durative-action move
@@ -52,6 +53,7 @@
       (at start (moving ?lift))
       (at end (not (moving ?lift)))
       (at end (increase (atFloorLift ?lift) (movement ?lift ?direction)))
+      (at end (increase (totalTime) (/ (movement ?lift UP) (speed ?lift))))
     )
   )
 
@@ -70,6 +72,7 @@
     :effect (and 
       (at end (increase (currentCapacity ?lift) 1))
       (at end (on ?person ?lift))
+      (at end (increase (totalTime) 1))
     )
   )
 
@@ -87,6 +90,7 @@
       (at end (decrease (currentCapacity ?lift) 1))
       (at end (not (on ?person ?lift)))
       (at end (assign (atFloorPerson ?person) (atFloorLift ?lift)))
+      (at end (increase (totalTime) 1))
     )
   )
 

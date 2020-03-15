@@ -7,6 +7,7 @@
   )
 
   (:init
+    (= (totalTime) 0)
     (= (moveTime FAST) 1)
     (= (moveTime SLOW) 50)
     (= (boardTime) 1)
@@ -47,5 +48,5 @@
     (atPerson P09 N9)
   ))
 
-  ;(:metric minimize (???))
+  (:metric minimize (totalTime))
 )

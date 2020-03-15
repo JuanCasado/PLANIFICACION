@@ -81,7 +81,7 @@
       (at start (not (atPerson ?person ?floor)))
       (at end (atPerson ?person ?lift))
       (at end (increase (capacity ?lift) 1))
-      (at end (increase (boardTime) (moveTime ?liftType)))
+      (at end (increase (totalTime) (boardTime)))
     )
   )
 
@@ -102,7 +102,7 @@
       (at start (not (atPerson ?person ?lift)))
       (at end (atPerson ?person ?floor))
       (at end (decrease (capacity ?lift) 1))
-      (at end (increase (leaveTime) (moveTime ?liftType)))
+      (at end (increase (totalTime) (leaveTime)))
     )
   )
 
