@@ -21,7 +21,7 @@
     taskType
   )
 
-  ;(:constants (and
+  ;(:constraints (and
   ;  (forall (?robot - robot) (always 
   ;    (> (battery ?robot) (minBattery ?robot))
   ;  ))
