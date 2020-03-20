@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  ubuntu:
+    image: ubuntu-planning:18.04
+    stdin_open: true
+    tty: true
+    container_name: ubuntu-planning
+    build: ./
+    volumes:
+      - ./:/planning
