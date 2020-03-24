@@ -25,7 +25,7 @@ offloadTime = (averageWorkerWeight*workers)^2
 
 The train Station are connected in this pattern:
 
-[StationPattern](./stationPattern.png)
+[![StationPattern](./stationPattern.png)]
 
 The workers live on the stations S5 S4 S3 S2, two on each, they start there and also need to be carried there at the end of the day.
 The mines are at stations S1 and S0.
