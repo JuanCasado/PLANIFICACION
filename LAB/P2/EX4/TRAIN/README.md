@@ -33,3 +33,19 @@ The goal is to transport 100Kg of gold to stations S4 and S5 as fast as it is po
 
 Solomon King is also wandering what would be better for it business, to hire an extra worker ot to buy an extra train.
 If only he had a way to predict how this will affect the time needed to transport the gold.
+
+*Problem solved by:*
+
+*Juan Casado Ballesteros*
+
+*Juan José Córdoba Zamora*
+
+*Gabriel López Cuenca*
+
+*Miguel Ángle Losada Fernández*
+
+*Sara Martínez Martínez*
+
+*Sergio Sanz Sacristán*
+
+*Álvaro Zamorano Ortega*
