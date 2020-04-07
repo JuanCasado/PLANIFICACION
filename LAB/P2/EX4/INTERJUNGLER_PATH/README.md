@@ -16,7 +16,7 @@ XP and gold can be earned by killing jungle camps which are spread along the map
 * **Jungle Camps** (8): Each camp give a different amount of gold and xp.
 * **Lanes** (3): The player can also go to a lane and help (gank) a partner.
 
-![LOL Map](./LOL.png)
+![LOL Map](./LoL.png)
 
 ## Modeling decisions
 
@@ -38,7 +38,7 @@ There are several ways the planner can be configured according on your play styl
 A possible goal to use can be to gank a certain lane.
 The planner will maximize the metric mut will at least do this action.
 
-``` pddl
+``` lisp
 (:goal (and
   (gankedlane TOP)
   (gankedlane BOT)
@@ -50,7 +50,7 @@ The planner will maximize the metric mut will at least do this action.
 The goal can also be set to at least gank without saying what to gank.
 The planner will choose that for us.
 
-``` pddl
+``` lisp
 (:goal (and
   (gank TOP)
 ))
