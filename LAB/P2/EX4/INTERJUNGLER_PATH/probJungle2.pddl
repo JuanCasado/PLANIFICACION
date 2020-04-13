@@ -1,4 +1,4 @@
-(define (problem probJungle) (:domain jungle)
+(define (problem probJungle2) (:domain jungle)
   (:objects 
     BLUE RED SCUTTLER_NASHOR SCUTTLER_DRAKE GROMP RAPTORS WOLVES KRUG - camp
     TOP MID BOT - lane
@@ -156,13 +156,11 @@
     (at BASE)
 
     (= (campsDone) 0)
-    (= (campsToDoBeforeGank) 0)
+    (= (campsToDoBeforeGank) 5)
   )
 
   (:goal (and
-    (= (campsDone) 4)
-    (gankedlane TOP)
-    (gankedlane BOT)
+    (ganked)
   ))
 
   (:metric maximize (+

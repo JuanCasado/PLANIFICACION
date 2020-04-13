@@ -1,5 +1,5 @@
 
-(define (domain domain_name)
+(define (domain jungle)
 
   (:requirements 
     :strips 

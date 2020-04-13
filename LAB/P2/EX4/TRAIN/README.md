@@ -10,9 +10,6 @@ Only one train can stop on a train station at a time.
 When a train is stopped on a train station workers can offload the gold.
 Also they can get out the train and stay on the train station.
 
-If a train is topped on one train station the other train can pass through the train station without stopping or stop next to the other train.
-If two trains stay next to each other workers can get out but cannot offload gold.
-
 When Solomon King opened its mines he hired the best workers in the hole realm.
 They are that good than when cooperate are able to load and offload gold squared fast.
 On the other hand at that time trains where so inchoate that where squared slow to the amount of weight they carried.
@@ -33,6 +30,10 @@ The goal is to transport 100Kg of gold to stations S4 and S5 as fast as it is po
 
 Solomon King is also wandering what would be better for it business, to hire an extra worker ot to buy an extra train.
 If only he had a way to predict how this will affect the time needed to transport the gold.
+
+## Problems found
+
+Most planners, at least the one we have access to cannot handle exponential duration on their actions so that part could not have been done.
 
 *Problem solved by:*
 
