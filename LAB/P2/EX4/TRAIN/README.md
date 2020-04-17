@@ -35,3 +35,18 @@ If only he had a way to predict how this will affect the time needed to transpor
 
 Most planners, at least the one we have access to cannot handle exponential duration on their actions so that part could not have been done.
 
+## Contributing
+
+*Juan Casado Ballesteros*
+
+*Juan José Córdoba Zamora*
+
+*Gabriel López Cuenca*
+
+*Miguel Ángle Losada Fernández*
+
+*Sara Martínez Martínez*
+
+*Sergio Sanz Sacristán*
+
+*Álvaro Zamorano Ortega*
