@@ -1,29 +1,30 @@
 
 (define (problem probRiver) (:domain river)
-  (:objects 
-    BOAT LEFT_RIVERSIDE RIGHT_RIVERSIDE - location
-    CANNIBAL MISSIONER - person
-  )
 
   (:init
-    (= (sails) 0)
-    (= (count CANNIBAL LEFT_RIVERSIDE) 2)
-    (= (count MISSIONER LEFT_RIVERSIDE) 1)
-    (= (count CANNIBAL BOAT) 0)
-    (= (count MISSIONER BOAT) 0)
+    (= (count CANNIBAL LEFT_RIVERSIDE) 3)
+    (= (count MISSIONER LEFT_RIVERSIDE) 3)
     (= (count CANNIBAL RIGHT_RIVERSIDE) 0)
     (= (count MISSIONER RIGHT_RIVERSIDE) 0)
-    (connectedPerson LEFT_RIVERSIDE BOAT) (connectedPerson BOAT LEFT_RIVERSIDE)
-    (connectedPerson BOAT RIGHT_RIVERSIDE) (connectedPerson RIGHT_RIVERSIDE BOAT)
-    (connectedBoat LEFT_RIVERSIDE RIGHT_RIVERSIDE)(connectedPerson RIGHT_RIVERSIDE LEFT_RIVERSIDE)
     (boatAt LEFT_RIVERSIDE)
   )
 
   (:goal (and
-    (= (count CANNIBAL RIGHT_RIVERSIDE) 2)
-    (= (count MISSIONER RIGHT_RIVERSIDE) 1)
+    (= (count CANNIBAL RIGHT_RIVERSIDE) 3)
+    (= (count MISSIONER RIGHT_RIVERSIDE) 3)
   ))
 
-  (:metric minimize (sails))
+  (:constraints 
+    (always (forall (?location - location) 
+      (and 
+        (or 
+          (<= (count CANNIBAL ?location) (count MISSIONER ?location))
+          (= (count MISSIONER ?location) 0)
+        )
+        (>= (count CANNIBAL ?location) 0)
+        (>= (count MISSIONER ?location) 0)
+      )
+    ))
+  )
 
 )
