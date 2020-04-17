@@ -28,7 +28,18 @@
     (count ?person - person ?location - location)
   )
 
-  
+  (:constraints 
+    (always (forall (?location - location) 
+      (and 
+        (or 
+          (<= (count CANNIBAL ?location) (count MISSIONER ?location))
+          (= (count MISSIONER ?location) 0)
+        )
+        (>= (count CANNIBAL ?location) 0)
+        (>= (count MISSIONER ?location) 0)
+      )
+    ))
+  )
 
   (:action move2Cannibals
     :parameters (
