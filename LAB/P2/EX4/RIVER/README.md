@@ -9,3 +9,19 @@ Some of the formulations of the problem conceptually allow to extend it from itÂ
 This is the case with the husbands or the cannibals formulations.
 
 Even though it is a restriction problem it can be solved through planning technics.
+
+## Solution to the problem with 3 cannibals and 3 missioners
+
+![River](./River.png)
+
+## Extra information
+
+This problem even though easy to solve by hand it is not as easy to solve by most planners.
+The main difficulties to solve it are:
+
+* Most planners cannot properly traverse a plan tree with natural numbers.
+* Some planners can only have some logical operations expressed in certain ways.
+
+Solving the problem with a planner not only means to know to sole the problem by hand.
+In fact it does not only mean to be able to express the problem in the pddl languaje.
+It also means to understand the pddl that the specific planner can understand in a good enough way to be able to make valid plans.
