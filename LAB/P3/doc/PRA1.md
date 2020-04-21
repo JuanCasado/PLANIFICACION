@@ -36,15 +36,15 @@ to use values between 15 and 40 in order not to lose precision without compromis
 
 4. In order to change the algorithm (A*, Dijkstra or Theta*) just set "A*"  "Dijkstra" or "Theta*" in the ```algorithm``` field of ```conf/controller-pathplanning.json``` (caution, the simulator is case sensitive). We provide you with the implementation of A* and Dijkstra. The implementation of A* is based on the  pseudo-code of the next figure:
 
-<img align="center" src="A*.png" width="600">
+![A*.png](./A*.png)
 
 5. Implement Theta* using the following pseudo-code:
 
-<img align="center" src="Theta*.png" width="600">
+![Theta*.png](./Theta*.png)
 
 Take into account that the difference between A* and Theta* is the Line of sight. Here is the code to calculate it:
 
-<img align="center" src="Lineofsight.png" width="600">
+![Lineofsight.png](./Lineofsight.png)
 
 6. Which heuristic is used by default? If needed, use the path-planning visualizer in https://qiao.github.io/PathFinding.js/visual/ to reconstruct the scenario and observe the node expansion using the different algorithms.
 
