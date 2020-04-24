@@ -82,7 +82,7 @@ def neighbors(point,grid):
                      [(x+1, y), (x,y + 1), (x+1, y+1)]]
     return [link for link in links if link.value != 9]
 
-def search_dijkstra(origin, goal, grid, heur=None):
+def search_dijkstra(origin, goal, grid, heur=None, scale=None):
     """
         Executes the Dijkstra path planning algorithm over a grid.
         Inputs:
@@ -90,6 +90,7 @@ def search_dijkstra(origin, goal, grid, heur=None):
             - goal: node that needs to be reached.
             - grid: grid over which to perform the algorithm.
             - heur: reference to a string representing an heuristic.
+            - scale: scale factor for the heuristic.
             Unused, kept to standarize input.
         Outputs:
             - ordered list of nodes representing the path found from
@@ -125,7 +126,7 @@ def search_dijkstra(origin, goal, grid, heur=None):
 
 pp.register_search_method('Dijkstra', search_dijkstra)
 
-def search_dijkstra_mesh(origin, goal, mesh, heur=None):
+def search_dijkstra_mesh(origin, goal, mesh, heur=None, scale=None):
     """
         Executes the Dijkstra path planning algorithm over a mesh.
         Inputs:
@@ -133,6 +134,7 @@ def search_dijkstra_mesh(origin, goal, mesh, heur=None):
             - goal: node that needs to be reached.
             - mesh: mesh over which to perform the algorithm.
             - heur: reference to a string representing an heuristic.
+            - scale: scale factor for the heuristic.
             Unused, kept to standarize input.
         Outputs:
             - ordered list of nodes representing the path found from

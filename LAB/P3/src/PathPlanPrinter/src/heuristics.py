@@ -28,27 +28,39 @@ __version__ = "0.0.1"
 
 
 import path_planning as pp
+import math
 
-def manhattan(point,point2):
-    """
-        Function that performs Manhattan heuristic.
-    """
-    return 0
-
-pp.register_heuristic('manhattan', manhattan)
-
-def naive(point, point2):
-    """
-        Function that performs a naive heuristic.
-    """
-    return 1
-
+def naive(point1, point2, scale=1):
+    return scale
 pp.register_heuristic('naive', naive)
 
-def euclidean(point, point2):
-    """
-        Function that performs euclidean heuristic.
-    """
-    return 25
 
+def dijkstra(point1, point2, scale=1):
+    return 0 * scale
+pp.register_heuristic('dijkstra', dijkstra)
+
+
+def manhattan(point1, point2, scale=1):
+    return scale * (abs(point1.point[0] - point2.point[0]) + abs(point1.point[1] - point2.point[1]))
+pp.register_heuristic('manhattan', manhattan)
+
+
+def euclidean(point1, point2, scale=1):
+    return scale * math.sqrt(math.pow(point1.point[0] - point2.point[0], 2) + math.pow(point1.point[1] - point2.point[1], 2))
 pp.register_heuristic('euclidean', euclidean)
+
+
+def diagonal(point1, point2, mode, scale=1):
+    d0 = abs(point1.point[0] - point2.point[0])
+    d1 = abs(point1.point[1] - point2.point[1])
+    return scale * (d0 + d1) + (mode - 2 * scale) * min(d0, d1)
+
+
+def octile(point1, point2, scale=1):
+    return diagonal(point1, point2, math.sqrt(2), scale)
+pp.register_heuristic('octile', octile)
+
+
+def chebyshev(point1, point2, scale=1):
+    return diagonal(point1, point2, 1, scale)
+pp.register_heuristic('chebyshev', chebyshev)

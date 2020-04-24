@@ -2,6 +2,12 @@ from PIL import Image, ImageDraw, ImageColor
 import numpy as np
 import time
 
+def print_waypoints(waypoints, cost, expanded_nodes):
+    print(f'Planned path: {waypoints}')
+    print(f'Path length: {len(waypoints)}')
+    print(f'Total path cost: {cost}')
+    print(f'Total nodes expanded: {expanded_nodes}')
+
 class PathPlanPrinter():
     def __init__(self, plan=[], input_file="",
                  output_file="", grid_size=[]):
@@ -83,10 +89,10 @@ class PathPlanPrinter():
         img_d.line(self.plan, fill=(155, 0, 100), width=3)
         start = self.plan[0]
         img_d.ellipse([(start[0]-5, start[1]-5),(start[0]+5, start[1]+5)], fill="red")
-        img_d.text((start[0]+20, start[1]), "Start", fill="black")
+        img_d.text((start[0]+20, start[1]), "Start", fill="yellow")
         finish = self.plan[-1]
         img_d.ellipse([(finish[0]-5, finish[1]-5),(finish[0]+5, finish[1]+5)], fill="blue")
-        img_d.text((finish[0]+20, finish[1]), "Finish", fill="black")
+        img_d.text((finish[0]+20, finish[1]), "Finish", fill="yellow")
         del img_d
         self.__plan_draw = True
 

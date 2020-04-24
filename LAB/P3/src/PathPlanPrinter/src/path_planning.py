@@ -32,6 +32,7 @@ __version__ = "0.0.1"
 
 import numpy as np
 import math
+import time
 from PIL import Image
 
 import PathPlanPrinter as printer
@@ -57,7 +58,17 @@ def register_search_method(label, function):
             search method in question.
     """
     global search_methods
-    search_methods[label] = function
+    def function_caller (label, function, args):
+        start = time.time()
+        print(f'Search algorithm {label} with heuristic {args[3]} * {args[4]}')
+        try:
+            return function(args[0],args[1],args[2], args[3], args[4])
+        finally:
+            now = time.time()
+            print(f'Search algorithm took: {now - start}s')
+
+
+    search_methods[label] = lambda *args : function_caller(label, function, args)
 
 def register_heuristic(label, function):
     """
@@ -93,8 +104,8 @@ def generate_grid(npdata, divider):
         chunk_width = map_size[0]/divider
         chunk_height = map_size[1]/divider
         divider = [divider, divider]
-    print(map_size)
-    print(chunk_width, chunk_height)
+    print(f'Map Size: {map_size}')
+    print(f'Chunk Size: ({chunk_width}, {chunk_height})')
     grid = []
     for i in range(divider[1]):
         row = []
@@ -220,7 +231,7 @@ def generate_navmesh(npdata, waypoints):
         generate_neighbors(n, nodes)
     return nodes
 
-def generate_waypoints_list(algo, start, finish, grid, heur="naive"):
+def generate_waypoints_list(algo, start, finish, grid, heur="naive", scale=1):
     """
         Generates an ordered list of waypoints for a controller to iterate over.
         Inputs:
@@ -234,19 +245,16 @@ def generate_waypoints_list(algo, start, finish, grid, heur="naive"):
             - ordered list of waypoints conforming the planned path.
     """
     global search_methods, expanded_nodes
-    nodes = search_methods[algo](grid[start[0]][start[1]], grid[finish[0]][finish[1]], grid, heur)
+    nodes = search_methods[algo](grid[start[0]][start[1]], grid[finish[0]][finish[1]], grid, heur, scale)
     waypoints = []
     cost = 0
     for n in nodes:
         cost += n.value
         waypoints.append(n.point)
-    print("Planned path: ",waypoints)
-    print("Path length: ", len(waypoints))
-    print("Total path cost: ", cost)
-    print("Total nodes expanded: ", expanded_nodes)
+    printer.print_waypoints(waypoints, cost, expanded_nodes)
     return waypoints
 
-def generate_waypoints_list_mesh(algo, start, finish, mesh, heur="naive"):
+def generate_waypoints_list_mesh(algo, start, finish, mesh, heur="naive", scale=1):
     """
         Generates an ordered list of waypoints for a controller to iterate over.
         Inputs:
@@ -260,19 +268,16 @@ def generate_waypoints_list_mesh(algo, start, finish, mesh, heur="naive"):
             - ordered list of waypoints conforming the planned path.
     """
     global search_methods, expanded_nodes
-    nodes = search_methods[algo](mesh[tuple(start)], mesh[tuple(finish)], mesh, heur)
+    nodes = search_methods[algo](mesh[tuple(start)], mesh[tuple(finish)], mesh, heur, scale)
     waypoints = []
     cost = 0
     for n in nodes:
         waypoints.append(n.point)
         cost += n.value
-    print("Planned path: ",waypoints)
-    print("Path length: ", len(waypoints))
-    print("Total path cost: ", cost)
-    print("Total nodes expanded: ", expanded_nodes)
+    printer.print_waypoints(waypoints, cost, expanded_nodes)
     return waypoints
 
-def run_path_planning(grid_sze, algo='A*', start=(1, 1), finish=(2,2), heur='naive', show_grid=True):
+def run_path_planning(grid_sze, algo='A*', start=(1, 1), finish=(2,2), heur='naive', scale=1, show_grid=True):
     """
         Configures and runs a given path planning algorithm over a grid.
         Inputs:
@@ -288,7 +293,7 @@ def run_path_planning(grid_sze, algo='A*', start=(1, 1), finish=(2,2), heur='nai
     npdata = np.rot90(npdata)
     npdata = np.flipud(npdata)
     grid = create_grid(npdata, grid_sze)
-    res = generate_waypoints_list(algo, start, finish, grid, heur)
+    res = generate_waypoints_list(algo, start, finish, grid, heur, scale)
     npdata = np.flipud(npdata)
     npdata = np.rot90(npdata, k=3)
     div = 10
@@ -299,7 +304,7 @@ def run_path_planning(grid_sze, algo='A*', start=(1, 1), finish=(2,2), heur='nai
     grid_size = [width, height]
     return res
 
-def run_path_planning_mesh(mesh_points, algo='A* mesh', start=(1, 1), finish=(2, 2), heur='naive'):
+def run_path_planning_mesh(mesh_points, algo='A* mesh', scale=1, start=(1, 1), finish=(2, 2), heur='naive'):
     """
         Configures and runs a given path planning algorithm over a mesh.
         Inputs:
@@ -315,7 +320,7 @@ def run_path_planning_mesh(mesh_points, algo='A* mesh', start=(1, 1), finish=(2,
     npdata = np.rot90(u.npdata)
     npdata = np.flipud(u.npdata)
     mesh = generate_navmesh(u.npdata, mesh_points)
-    res = generate_waypoints_list_mesh(algo, start, finish, mesh, heur)
+    res = generate_waypoints_list_mesh(algo, start, finish, mesh, heur, scale)
     npdata = np.flipud(u.npdata)
     npdata = np.rot90(u.npdata, k=3)
     return res

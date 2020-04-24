@@ -81,14 +81,15 @@ def children(point,grid):
                      [(x+1, y), (x,y + 1), (x+1, y+1)]]
     return [link for link in links if link.value != 9]
 
-def aStar(start, goal, grid, heur='naive'):
+def aStar(start, goal, grid, heur='naive', scale=1):
     """
         Executes the A* path planning algorithm over a given grid.
         Inputs:
             - start: node from which to start.
             - goal: node to which it is desired to arrive.
             - grid: grid over which to execute the algorithm
-            - heur: heuristic function to use for the algorithm,
+            - heur: heuristic function to use for the algorithm.
+            - scale: scale factor for the heuristic.
             expressed as a string. Results will vary depending on
             it. Must be implemented separatedly.
         Outputs:
@@ -135,7 +136,7 @@ def aStar(start, goal, grid, heur='naive'):
             else:
                 #If it isn't in the open set, calculate the G and H score for the node
                 node.G = current.G + current.move_cost(node)
-                node.H = pp.heuristic[heur](node, goal)
+                node.H = pp.heuristic[heur](node, goal, scale)
                 #Set the parent to our current item
                 node.parent = current
                 #Add it to the set
@@ -145,14 +146,15 @@ def aStar(start, goal, grid, heur='naive'):
 
 pp.register_search_method('A*', aStar)
 
-def aStar_mesh(start, goal, grid, heur='naive'):
+def aStar_mesh(start, goal, grid, heur='naive', scale=1):
     """
         Executes the A* path planning algorithm over a given nav mesh.
         Inputs:
             - start: node from which to start.
             - goal: node to which it is desired to arrive.
             - grid: mesh over which to execute the algorithm
-            - heur: heuristic function to use for the algorithm,
+            - heur: heuristic function to use for the algorithm.
+            - scale: scale factor for the heuristic.
             expressed as a string. Results will vary depending on
             it. Must be implemented separatedly.
         Outputs:
@@ -199,7 +201,7 @@ def aStar_mesh(start, goal, grid, heur='naive'):
             else:
                 #If it isn't in the open set, calculate the G and H score for the node
                 node.G = current.G + current.move_cost(node)
-                node.H = pp.heuristic[heur](node, goal)
+                node.H = pp.heuristic[heur](node, goal, scale)
                 #Set the parent to our current item
                 node.parent = current
                 #Add it to the set
