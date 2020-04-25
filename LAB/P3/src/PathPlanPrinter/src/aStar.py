@@ -110,11 +110,10 @@ def aStar(start, goal, grid, heur='naive', scale=1):
         pp.expanded_nodes += 1
         #If it is the item we want, retrace the path and return it
         if current == goal:
-            path = []
+            path = [current]
             while current.parent:
-                path.append(current)
                 current = current.parent
-            path.append(current)
+                path.append(current)
             return path[::-1]
         #Remove the item from the open set
         openset.remove(current)
@@ -123,19 +122,18 @@ def aStar(start, goal, grid, heur='naive', scale=1):
         #Loop through the node's children/siblings
         for node in children(current,grid):
             #If it is already in the closed set, skip it
-            if node in closedset:
-                continue
+            if node in closedset: continue
             #Otherwise if it is already in the open set
+            new_g = current.G + current.move_cost(node)
             if node in openset:
                 #Check if we beat the G score 
-                new_g = current.G + current.move_cost(node)
                 if node.G > new_g:
                     #If so, update the node to have a new parent
                     node.G = new_g
                     node.parent = current
             else:
                 #If it isn't in the open set, calculate the G and H score for the node
-                node.G = current.G + current.move_cost(node)
+                node.G = new_g
                 node.H = pp.heuristic[heur](node, goal, scale)
                 #Set the parent to our current item
                 node.parent = current
@@ -175,11 +173,10 @@ def aStar_mesh(start, goal, grid, heur='naive', scale=1):
         pp.expanded_nodes += 1
         #If it is the item we want, retrace the path and return it
         if current == goal:
-            path = []
+            path = [current]
             while current.parent:
-                path.append(current)
                 current = current.parent
-            path.append(current)
+                path.append(current)
             return path[::-1]
         #Remove the item from the open set
         openset.remove(current)
@@ -188,19 +185,18 @@ def aStar_mesh(start, goal, grid, heur='naive', scale=1):
         #Loop through the node's children/siblings
         for node in current.neighbors.values():
             #If it is already in the closed set, skip it
-            if node in closedset:
-                continue
+            if node in closedset: continue
             #Otherwise if it is already in the open set
+            new_g = current.G + current.move_cost(node)
             if node in openset:
                 #Check if we beat the G score 
-                new_g = current.G + current.move_cost(node)
                 if node.G > new_g:
                     #If so, update the node to have a new parent
                     node.G = new_g
                     node.parent = current
             else:
                 #If it isn't in the open set, calculate the G and H score for the node
-                node.G = current.G + current.move_cost(node)
+                node.G = new_g
                 node.H = pp.heuristic[heur](node, goal, scale)
                 #Set the parent to our current item
                 node.parent = current

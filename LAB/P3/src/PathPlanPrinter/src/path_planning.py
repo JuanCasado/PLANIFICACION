@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """ This module defines general path planning utilities.
 
 It accounts for two different kinds environments over which to perform
@@ -346,3 +344,4 @@ def output_image(name, path, out_path=''):
 import heuristics
 import aStar
 import dijkstra
+import theta

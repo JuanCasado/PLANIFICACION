@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """ This module implements Dijkstra's path planning algorithm.
 
 Two variants are included: grid-based, and mesh-based.
