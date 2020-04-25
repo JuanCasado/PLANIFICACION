@@ -1,6 +1,0 @@
-{
-	"stage": "../res/stage.png",
-	"robot": ["../conf/robot.json"],
-	"controller": "../conf/controller-telecom.json",
-	"gui": true
-}

@@ -1,6 +1,0 @@
-{
-	"stage": "../res/test_2.png",
-	"robot": "../conf/robot.json",
-	"controller": "../conf/controller-pathplanning.json",
-	"gui": true
-}
