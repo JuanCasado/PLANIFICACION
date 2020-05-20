@@ -11,7 +11,8 @@ problem_path='/problem.pddl'
 execution_path='/pddl.txt'
 domain_path='./pddlRunner/domains/planetary.pddl'
 
-def run_json(json_problem):
+def run_json(str_problem):
+  json_problem=json.loads(str_problem)
   problem_name=json_problem['name']
   create_problem (json_problem, problem_name)
   execution=run_pddl(problem_name)
@@ -53,14 +54,14 @@ def create_problem (parsed_problem_description, output):
   prob = problem.problem(parsed_problem_description,dc)
   if not os.path.exists(f'{head_path}{output}'):
     os.makedirs(f'{head_path}{output}')
-  with open(f'{head_path}{output}{problem_name}', 'w+') as problem_output:
+  with open(f'{head_path}{output}{problem_path}', 'w+') as problem_output:
     problem_output.write(str(prob))
   
 
 
 if __name__ == '__main__':
   with open('./pddlRunner/json/problem_description.json') as problem_description:
-    parsed_problem_description = json.loads(problem_description.read())
-  run_json(parsed_problem_description)
+    str_problem = problem_description.read()
+  run_json(str_problem)
   
   
