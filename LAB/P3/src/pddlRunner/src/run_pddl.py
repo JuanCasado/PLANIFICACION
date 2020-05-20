@@ -3,6 +3,9 @@
 import distances_calculator
 import execution_parser
 import problem
+from functools import reduce
+from utils import group
+import utils
 import json
 import os, sys, subprocess
 
@@ -14,13 +17,13 @@ domain_path='./pddlRunner/domains/planetary.pddl'
 def run_json(str_problem):
   json_problem=json.loads(str_problem)
   problem_name=json_problem['name']
-  create_problem (json_problem, problem_name)
+  path_planner=create_problem (json_problem, problem_name)
   execution=run_pddl(problem_name)
-  execution_parser.parse_execution(problem_name, execution)
+  execution_parser.parse_execution(problem_name, execution, path_planner)
 
 def run_pddl (problem_name):
   running_process = subprocess.Popen(f"optic-clp {domain_path} {head_path}{problem_name}{problem_path}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
-  out=""
+  out=[]
   add_to_out=False
   end=False
   skipped=0
@@ -36,10 +39,10 @@ def run_pddl (problem_name):
         running_process.terminate()
         running_process.kill()
       else:
-        out+=line
+        out.append(line)
     elif 'Plan found with metric' in line:
       add_to_out=True
-    print(line, end='')
+    print(reduce(group, out), end='')
   print('PLAN FOUND!!!')
   with open(f'{head_path}{problem_name}{execution_path}', 'w+') as execution_output:
     execution_output.write(out)
@@ -47,15 +50,13 @@ def run_pddl (problem_name):
       
 
 def create_problem (parsed_problem_description, output):
-  dc = distances_calculator.distances_calculator( parsed_problem_description['pathPlan']['grid_size'],
-                                                  parsed_problem_description['pathPlan']['algorithm'], 
-                                                  parsed_problem_description['pathPlan']['heuristic'], 
-                                                  parsed_problem_description['pathPlan']['scale'])
-  prob = problem.problem(parsed_problem_description,dc)
+  path_planner = distances_calculator.distances_calculator( parsed_problem_description['pathPlan']['grid_size'], parsed_problem_description['pathPlan']['algorithm'], parsed_problem_description['pathPlan']['heuristic'], parsed_problem_description['pathPlan']['scale'])
+  prob = problem.problem(parsed_problem_description,path_planner)
   if not os.path.exists(f'{head_path}{output}'):
     os.makedirs(f'{head_path}{output}')
   with open(f'{head_path}{output}{problem_path}', 'w+') as problem_output:
     problem_output.write(str(prob))
+  return path_planner
   
 
 
