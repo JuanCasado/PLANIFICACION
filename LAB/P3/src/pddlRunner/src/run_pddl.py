@@ -1,16 +1,49 @@
 
 
 import distances_calculator
+import execution_parser
 import problem
 import json
-import os
+import os, sys, subprocess
 
 head_path='./pddlRunner/problems/'
-tail_path='/problem.pddl'
-domain_path='./src/pddlRunner/domains/planetary.pddl'
+problem_path='/problem.pddl'
+execution_path='/pddl.txt'
+domain_path='./pddlRunner/domains/planetary.pddl'
 
-def run_pddl (problem):
-  pass
+def run_json(json_problem):
+  problem_name=json_problem['name']
+  create_problem (json_problem, problem_name)
+  execution=run_pddl(problem_name)
+  execution_parser.parse_execution(problem_name, execution)
+
+def run_pddl (problem_name):
+  running_process = subprocess.Popen(f"optic-clp {domain_path} {head_path}{problem_name}{problem_path}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+  out=""
+  add_to_out=False
+  end=False
+  skipped=0
+  to_skip=3
+  while running_process.poll() is None and not end:
+    line=running_process.stdout.readline()
+    if add_to_out:
+      if skipped < to_skip:
+        skipped+=1
+      elif 'Resorting to best-first search' in line:
+        add_to_out=False
+        end=True
+        running_process.terminate()
+        running_process.kill()
+      else:
+        out+=line
+    elif 'Plan found with metric' in line:
+      add_to_out=True
+    print(line, end='')
+  print('PLAN FOUND!!!')
+  with open(f'{head_path}{problem_name}{execution_path}', 'w+') as execution_output:
+    execution_output.write(out)
+  return out
+      
 
 def create_problem (parsed_problem_description, output):
   dc = distances_calculator.distances_calculator( parsed_problem_description['pathPlan']['grid_size'],
@@ -18,14 +51,16 @@ def create_problem (parsed_problem_description, output):
                                                   parsed_problem_description['pathPlan']['heuristic'], 
                                                   parsed_problem_description['pathPlan']['scale'])
   prob = problem.problem(parsed_problem_description,dc)
-  os.mkdir(f'{head_path}{output}')
-  with open(f'{head_path}{output}{tail_path}', 'w+') as problem_output:
+  if not os.path.exists(f'{head_path}{output}'):
+    os.makedirs(f'{head_path}{output}')
+  with open(f'{head_path}{output}{problem_name}', 'w+') as problem_output:
     problem_output.write(str(prob))
   
 
 
 if __name__ == '__main__':
-  with open('./pddlRunner/src/problem_description.json') as problem_description:
+  with open('./pddlRunner/json/problem_description.json') as problem_description:
     parsed_problem_description = json.loads(problem_description.read())
-  create_problem (parsed_problem_description, parsed_problem_description['name'])
+  run_json(parsed_problem_description)
+  
   
