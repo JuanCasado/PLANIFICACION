@@ -95,7 +95,7 @@ def generate_grid(npdata, divider):
     """
     map_size = npdata.shape
     npdata = npdata.copy()
-    if type(divider) is list:
+    if type(divider) is list or type(divider) is tuple:
         chunk_width = map_size[0]/divider[0]
         chunk_height = map_size[1]/divider[1]
     else:
@@ -295,7 +295,7 @@ def run_path_planning(grid_sze, algo='A*', start=(1, 1), finish=(2,2), heur='nai
     npdata = np.flipud(npdata)
     npdata = np.rot90(npdata, k=3)
     div = 10
-    if type(grid_sze) is list:
+    if type(grid_sze) is list or type(grid_sze) is tuple:
         width, height = npdata.shape[0]/grid_sze[1], npdata.shape[1]/grid_sze[0]
     else:
         width, height = npdata.shape[0]/grid_sze, npdata.shape[1]/grid_sze

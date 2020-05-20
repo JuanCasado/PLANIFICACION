@@ -21,18 +21,16 @@
     taskType
   )
 
-  ;(:constraints (and
-  ;  (forall (?robot - robot) (always 
-  ;    (> (battery ?robot) (minBattery ?robot))
-  ;  ))
-  ;))
-
   (:predicates
     (at ?robot - robot ?location - location)
     (connected ?from - location ?to - location)
-    (moving ?robot - robot)
   )
 
+  ;(:constraints (and
+  ;  (forall (?robot - robot) (always 
+  ;    (> (battery ?robot) 0)
+  ;  ))
+  ;))
 
   (:functions
     (distance ?from - location ?to - location)
@@ -41,7 +39,6 @@
     (moveBurn ?robot - robot ?speedType - speedType)
     (taskBurn ?robot - robot ?taskType - taskType)
     (maxBattery ?robot - robot)
-    (minBattery ?robot - robot)
     (rechargeRate ?robot - robot)
     (tasks ?location - location ?taskType - taskType)
     (taskDuration ?robot - robot ?taskType - taskType)
@@ -61,16 +58,12 @@
     :duration (= ?duration (/(distance ?from ?to) (speed ?robot ?speedType)))
     :condition (and 
       (at start (at ?robot ?from))
-      (at start (> (battery ?robot) (* (distance ?from ?to) (moveBurn ?robot ?speedType))))
-      (over all (not (= ?from ?to)))
       (over all (connected ?from ?to))
-      (over all (> (battery ?robot) (minBattery ?robot)))
+      (at end (> (battery ?robot) 0))
     )
     :effect (and 
       (at start (not (at ?robot ?from)))
-      (at start (moving ?robot))
       (at end (at ?robot ?to))
-      (at end (not (moving ?robot)))
       (at end (decrease (battery ?robot) (* (distance ?from ?to) (moveBurn ?robot ?speedType))))
       (at end (increase (totalBattery) (* (distance ?from ?to) (moveBurn ?robot ?speedType))))
       (at end (increase (totalTime) (/ (distance ?from ?to) (speed ?robot ?speedType))))
@@ -87,10 +80,9 @@
     :condition (and
       (at start (< (battery ?robot) (maxBattery ?robot)))
       (over all (at ?robot ?location))
-      (over all (not (moving ?robot)))
     )
     :effect (and 
-      (at end (assign (battery ?robot) (maxBattery ?robot)))
+      (at end (increase (battery ?robot) (maxBattery ?robot)))
       (at end (increase (totalTime) (* (- (maxBattery ?robot) (battery ?robot)) (rechargeRate ?robot))))
       (at end (increase (recharges) 1))
     )
@@ -105,14 +97,13 @@
     )
     :duration (= ?duration (taskDuration ?robot ?taskType))
     :condition (and
-      (at start (> (battery ?robot) (taskBurn ?robot ?taskType)))
-      (over all (not (moving ?robot)))
       (over all (at ?robot ?location))
+      (at start (> (battery ?robot) (*(taskBurn ?robot ?taskType) (taskDuration ?robot ?taskType))))
     )
     :effect (and 
       (at end (increase (tasks ?location ?taskType) 1))
-      (at end (decrease (battery ?robot) (taskBurn ?robot ?taskType)))
-      (at end (increase (totalBattery) (taskBurn ?robot ?taskType)))
+      (at end (decrease (battery ?robot) (*(taskBurn ?robot ?taskType) (taskDuration ?robot ?taskType))))
+      (at end (increase (totalBattery) (*(taskBurn ?robot ?taskType) (taskDuration ?robot ?taskType))))
       (at end (increase (totalTime) (taskDuration ?robot ?taskType)))
     )
   )

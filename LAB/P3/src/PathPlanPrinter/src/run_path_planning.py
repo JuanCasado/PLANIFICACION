@@ -13,6 +13,8 @@ def run_path_planning(scenario_file, navmesh_file, grid_size, algorithm, heurist
     if type(scale) != float:
         scale = float(scale)
     pp.load_image(scenario_file)
+    print("--------------------------------------------")
+    print(f"Running path plan from {start} to {finish}")
     if navmesh_file:
         with open(navmesh_file) as navmesh:
             path = pp.run_path_planning_mesh(navmesh['mesh'],algo=algorithm, heur=heuristic, scale=scale,start=start, finish=finish)
@@ -20,8 +22,10 @@ def run_path_planning(scenario_file, navmesh_file, grid_size, algorithm, heurist
         if not grid_size:
             print("Please, define a grid size.")
             exit()
-        path = pp.run_path_planning(int(grid_size), algo=algorithm,heur=heuristic, scale=scale, start=start, finish=finish)
-    pp.output_image(scenario_file, path, out)
+        path = pp.run_path_planning(grid_size, algo=algorithm,heur=heuristic, scale=scale, start=start, finish=finish)
+    if out:
+        pp.output_image(scenario_file, path, out)
+    return path, pp.npdata.shape
 
 
 if __name__ == '__main__':
@@ -84,7 +88,7 @@ if __name__ == '__main__':
         scale = 1
     else:
         scale = args.scale
-    run_path_planning(args.scenario, args.navmesh, args.grid_size,
+    run_path_planning(args.scenario, args.navmesh, clean_tuple(args.grid_size),
                     args.algorithm, args.heuristic, scale,
                     clean_tuple(args.start), clean_tuple(args.finish),
                     args.out)
