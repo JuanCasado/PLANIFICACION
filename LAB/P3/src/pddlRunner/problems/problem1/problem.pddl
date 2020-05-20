@@ -1,8 +1,8 @@
 (define (problem probPlanetary) (:domain planetary) (:objects
  ROBOT1 ROBOT2 - robot
  LOCATION0 LOCATION1 LOCATION2 LOCATION3 LOCATION4 LOCATION5 - location
- FAST SLOW - speedType
- PHOTO DRILL - taskType
+ SLOW FAST - speedType
+ DRILL PHOTO - taskType
 )
 (:init (= (totalTime) 0) (= (totalBattery) 0) (= (totalDistance) 0) (= (recharges) 0)
  (at ROBOT1 LOCATION3)
@@ -20,7 +20,7 @@
  (= (taskDuration ROBOT2 PHOTO) 30) (= (taskBurn ROBOT2 PHOTO) 1)
 
 
- (= (tasks LOCATION0 PHOTO) 0)(= (tasks LOCATION1 PHOTO) 0)(= (tasks LOCATION2 PHOTO) 0)(= (tasks LOCATION3 PHOTO) 0)(= (tasks LOCATION4 PHOTO) 0)(= (tasks LOCATION5 PHOTO) 0)(= (tasks LOCATION0 DRILL) 0)(= (tasks LOCATION1 DRILL) 0)(= (tasks LOCATION2 DRILL) 0)(= (tasks LOCATION3 DRILL) 0)(= (tasks LOCATION4 DRILL) 0)(= (tasks LOCATION5 DRILL) 0)
+ (= (tasks LOCATION0 DRILL) 0)(= (tasks LOCATION1 DRILL) 0)(= (tasks LOCATION2 DRILL) 0)(= (tasks LOCATION3 DRILL) 0)(= (tasks LOCATION4 DRILL) 0)(= (tasks LOCATION5 DRILL) 0)(= (tasks LOCATION0 PHOTO) 0)(= (tasks LOCATION1 PHOTO) 0)(= (tasks LOCATION2 PHOTO) 0)(= (tasks LOCATION3 PHOTO) 0)(= (tasks LOCATION4 PHOTO) 0)(= (tasks LOCATION5 PHOTO) 0)
 
   (= (distance LOCATION0 LOCATION1) 350) (= (distance LOCATION0 LOCATION2) 286) (= (distance LOCATION0 LOCATION3) 234) (= (distance LOCATION0 LOCATION4) 133) (= (distance LOCATION0 LOCATION5) 251) (= (distance LOCATION1 LOCATION0) 350)  (= (distance LOCATION1 LOCATION2) 129) (= (distance LOCATION1 LOCATION3) 250) (= (distance LOCATION1 LOCATION4) 243) (= (distance LOCATION1 LOCATION5) 99) (= (distance LOCATION2 LOCATION0) 286) (= (distance LOCATION2 LOCATION1) 129)   (= (distance LOCATION2 LOCATION4) 226) (= (distance LOCATION2 LOCATION5) 101) (= (distance LOCATION3 LOCATION0) 234) (= (distance LOCATION3 LOCATION1) 250)   (= (distance LOCATION3 LOCATION4) 111) (= (distance LOCATION3 LOCATION5) 188) (= (distance LOCATION4 LOCATION0) 133) (= (distance LOCATION4 LOCATION1) 243) (= (distance LOCATION4 LOCATION2) 226) (= (distance LOCATION4 LOCATION3) 111)  (= (distance LOCATION4 LOCATION5) 150) (= (distance LOCATION5 LOCATION0) 251) (= (distance LOCATION5 LOCATION1) 99) (= (distance LOCATION5 LOCATION2) 101) (= (distance LOCATION5 LOCATION3) 188) (= (distance LOCATION5 LOCATION4) 150) 
 
