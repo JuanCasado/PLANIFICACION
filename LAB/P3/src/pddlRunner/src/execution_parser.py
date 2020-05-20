@@ -1,6 +1,8 @@
 
 import re
 
+head_path='./pddlRunner/problems/'
+
 def generate_task_list(task_list):
   tasks = []
   for line in task_list:
@@ -22,8 +24,8 @@ def generate_task_list(task_list):
         tasks[-1] = {'task': tasks[-1][0], 'who': tasks[-1][1], 'at': tasks[-1][2], 'in': tasks[-1][3], 'time':time_stamp}
   return tasks
 
-def parse_execution(problem_name, execution, path_planner):
+def parse_execution(problem_name, execution, path_planner, points):
   tasks=generate_task_list(execution)
-  for task in enumerate(tasks):
-    pass
+  for index, task in enumerate(tasks):
+    path_planner.run(points[task['from']], points[task['to']], f'./pddlRunner/problems/{problem_name}/action_{index}.png')
   

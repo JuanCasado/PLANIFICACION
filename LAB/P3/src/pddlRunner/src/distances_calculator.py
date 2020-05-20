@@ -41,7 +41,7 @@ class distances_calculator:
     self.previous_node=end
 
   def make_distance (self, start, end, out=None):
-    path, self.map_size = run_path_planning('./PathPlanPrinter/res/test_2.png', None, self.grid_size, self.algorithm, self.heuristic, self.scale, start, end, out)
+    path = self.run(start, end, out)
     distance = 0
     current_node = path[0]
     extra_points = []
@@ -80,4 +80,8 @@ class distances_calculator:
       for task2 in task_points:
         if task1 != task2:
           self.make_distance(task1,task2)
+
+  def run (self, start, end, out=None):
+    path, self.map_size = run_path_planning('./PathPlanPrinter/res/test_2.png', None, self.grid_size, self.algorithm, self.heuristic, self.scale, start, end, out)
+    return path
     

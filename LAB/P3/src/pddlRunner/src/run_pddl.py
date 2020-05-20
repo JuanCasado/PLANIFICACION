@@ -17,9 +17,9 @@ domain_path='./pddlRunner/domains/planetary.pddl'
 def run_json(str_problem):
   json_problem=json.loads(str_problem)
   problem_name=json_problem['name']
-  path_planner=create_problem (json_problem, problem_name)
+  path_planner, prob=create_problem (json_problem, problem_name)
   execution=run_pddl(problem_name)
-  execution_parser.parse_execution(problem_name, execution, path_planner)
+  execution_parser.parse_execution(problem_name, execution, path_planner, prob.points)
 
 def run_pddl (problem_name):
   running_process = subprocess.Popen(f"optic-clp {domain_path} {head_path}{problem_name}{problem_path}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
@@ -56,7 +56,7 @@ def create_problem (parsed_problem_description, output):
     os.makedirs(f'{head_path}{output}')
   with open(f'{head_path}{output}{problem_path}', 'w+') as problem_output:
     problem_output.write(str(prob))
-  return path_planner
+  return path_planner, prob
   
 
 
