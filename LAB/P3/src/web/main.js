@@ -156,6 +156,8 @@ const state = {
               if (++currentRobot < plan.robots.length) setTimeout(configureRobot, waitTime)
               else setTimeout(state.next, waitTime)
               robotStep=(robotStep+1)%6
+              currentTask=0
+              currentSpeed=0
             }
           }
           updatePlan()
@@ -192,13 +194,13 @@ const state = {
         setTimeout(configurePathPlan, waitTime)
       }break
       case 7: { // Set metric
-        const metric = window.prompt(`Enter the metric to minimice (totalTime | totalBattery | totalDistance | recharges')`)
+        const metric = window.prompt(`Enter the metric to minimice (totalTime | totalBattery | totalDistance | recharges)`)
         plan.metric = metric
         updatePlan()
         setTimeout(state.next, waitTime)
       }
       case 8: { // Set name
-        const name = window.prompt(`Enter the name of the plan`)
+        const name = window.prompt(`Enter the name of the problem`)
         plan.name = name
         updatePlan()
         initPlan()
@@ -215,7 +217,7 @@ const handleSet = () => {
       let named = 0
       for (robot in plan.robots) {
         if (plan.robots[robot].name === robotName) {
-          plan.robots[robot].init = [clickedUnits.height, clickedUnits.width]
+          plan.robots[robot].init = [clickedUnits.width, clickedUnits.height]
         }
         if (plan.robots[robot].init) ++named
       }
@@ -228,7 +230,7 @@ const handleSet = () => {
       for (task in plan.tasks) {
         if (plan.tasks[task].name === taskName) {
           const times = Number(window.prompt('How many times does the task happen'))
-          plan.goals.push({action: taskName, point: [clickedUnits.height, clickedUnits.width], times: times})
+          plan.goals.push({action: taskName, point: [clickedUnits.width, clickedUnits.height], times: times})
         }
       }
       updatePlan()

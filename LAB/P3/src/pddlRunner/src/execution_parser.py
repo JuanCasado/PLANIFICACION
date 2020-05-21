@@ -27,16 +27,24 @@ def generate_task_list(task_list):
 def parse_execution(problem_name, execution, path_planner, points):
   tasks=generate_task_list(execution)
   html=''
+  html_to_save=''
   for index, task in enumerate(tasks):
     if task['task']=='recharge':
-      html+=f'<p>[{task["time"]}] {task["who"]} recharged at {points[task["at"]]} in {task["in"]}</p>\n'
+      new_content=f'<p>[{task["time"]}] {task["who"]} recharged at {points[task["at"]]} in {task["in"]}</p>\n'
+      html+=new_content
+      html_to_save+=new_content
     elif task['task']=='performtask':
-      html+=f'<p>[{task["time"]}] {task["who"]} {task["what"]} at {points[task["at"]]} in {task["in"]}</p>\n'
+      new_content=f'<p>[{task["time"]}] {task["who"]} {task["what"]} at {points[task["at"]]} in {task["in"]}</p>\n'
+      html+=new_content
+      html_to_save+=new_content
     elif task['task']=='move':
-      html+=f'<p>[{task["time"]}] {task["who"]} moved from {points[task["from"]]} to {points[task["to"]]} in {task["in"]}</p>\n'
+      new_content=f'<p>[{task["time"]}] {task["who"]} moved from {points[task["from"]]} to {points[task["to"]]} in {task["in"]}</p>\n'
+      html+=new_content
+      html_to_save+=new_content
       path_planner.run(points[task['from']], points[task['to']], f'./pddlRunner/problems/{problem_name}/action_{index}.png')
       html+=f"<img src='/image/{problem_name}/action_{index}.png'/>\n"
+      html_to_save+=f"<img src='action_{index}.png'/>\n"
   with open(f'./pddlRunner/problems/{problem_name}/out.html', 'w+') as html_file:
-    html_file.write(f'<!DOCTYPE html><html><head></head><body>\n{html}</body></html>')
+    html_file.write(f'<!DOCTYPE html><html><head></head><body>\n{html_to_save}</body></html>')
   return html
   

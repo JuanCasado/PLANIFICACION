@@ -47,6 +47,8 @@ body, #global {
 }
 
 #loaded {
+  height: 0vh;
+  width: 0vw;
   visibility: hidden;
 }
 

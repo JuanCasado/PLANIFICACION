@@ -32,7 +32,6 @@ class distances_calculator:
     r_start=self.resize(self.previous_node)
     r_end=self.resize(end)
     distance=int(math.sqrt(math.pow(self.previous_node[0]-end[0],2)+math.pow(self.previous_node[1]-end[1],2)))
-    print(r_start,r_end)
     self.extra_points.append(r_end)
     self.extra_points.append(r_start)
     self.connections.add((r_start,r_end))

@@ -50,7 +50,10 @@ def run_pddl (problem_name):
     elif 'Plan found with metric' in line:
       add_to_out=True
     print(line, end='')
-  print('PLAN FOUND!!!')
+  if end:
+    print('PLAN FOUND!!!')
+  else:
+    print('PLAN NOt FOUND :(')
   with open(f'{head_path}{problem_name}{execution_path}', 'w+') as execution_output:
     execution_output.write(reduce(group, out))
   return out

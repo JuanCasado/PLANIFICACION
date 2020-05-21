@@ -198,3 +198,8 @@ python pddlRunner/src/run_pddl.py
 from the [../src](../src) directory will do the trick.
 
 More detailed instructions on how to run everything local (including the web server) can be found on [../Dockerfile](../Dockerfile) file.
+
+### Integration output
+
+For a total of 7 problem generated with the provided web tool their inputs and outputs can be found in [./src/pddlRunner/problems](./src/pddlRunner/problems).
+The web version of each problem needs to be open from inside the problem folder, it will show the action list and the path plan images.

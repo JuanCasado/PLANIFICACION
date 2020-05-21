@@ -1,7 +1,7 @@
 (define (problem probPlanetary) (:domain planetary) (:objects
  ROBOT0 - robot
  LOCATION0 LOCATION1 LOCATION2 LOCATION3 LOCATION4 LOCATION5 LOCATION6 - location
- FAST SLOW - speedType
+ SLOW FAST - speedType
  DRILL - taskType
 )
 (:init (= (totalTime) 0) (= (totalBattery) 0) (= (totalDistance) 0) (= (recharges) 0)

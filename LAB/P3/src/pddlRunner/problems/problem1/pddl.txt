@@ -1,4 +1,4 @@
-; Time 0.52
+; Time 0.81
  0.000: (move robot2 location2 location5 fast)  [2.524]
  0.000: (move robot1 location3 location4 fast)  [2.774]
  2.525: (recharge robot2 location5)  [0.784]
