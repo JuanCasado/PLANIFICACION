@@ -1,12 +1,16 @@
 
 source ./env/bin/activate
-python ./src/run_path_planning.py \
-  --scenario ./res/test_2.png \
-  --start "(27,19)" \
-  --finish "(8,20)" \
-  --grid_size "(40,40)" \
-  --algorithm theta      `# Dijkstra  || A* || theta`\
-  --heuristic chebyshev   `# manhattan || naive || euclidean || octile || dijkstra || chebyshev`\
-  --scale 1.001 \
-  --out ./out/path.png
+for heuristic in 'manhattan' 'euclidean' 'octile' 'dijkstra' 'chebyshev'; do
+  for algorithm in 'A*' 'theta'; do
+    python ./src/run_path_planning.py \
+      --scenario ./res/map2.png \
+      --start "(3,3)" \
+      --finish "(36,36)" \
+      --grid_size "(40,40)" \
+      --algorithm $algorithm      `# Dijkstra  || A* || theta`\
+      --heuristic $heuristic   `# manhattan || naive || euclidean || octile || dijkstra || chebyshev`\
+      --scale 1.001 \
+      --out ./out/task7Path-$algorithm-$heuristic-scaled.png
+  done
+done
 deactivate
