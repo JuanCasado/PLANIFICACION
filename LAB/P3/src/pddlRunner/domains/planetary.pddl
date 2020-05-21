@@ -78,11 +78,11 @@
     )
     :duration (= ?duration (* (- (maxBattery ?robot) (battery ?robot)) (rechargeRate ?robot)))
     :condition (and
-      (at start (< (battery ?robot) (maxBattery ?robot)))
+      (over all (< (battery ?robot) (maxBattery ?robot)))
       (over all (at ?robot ?location))
     )
     :effect (and 
-      (at end (increase (battery ?robot) (maxBattery ?robot)))
+      (at end (assign (battery ?robot) (maxBattery ?robot)))
       (at end (increase (totalTime) (* (- (maxBattery ?robot) (battery ?robot)) (rechargeRate ?robot))))
       (at end (increase (recharges) 1))
     )

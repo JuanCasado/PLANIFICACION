@@ -17,9 +17,16 @@ domain_path='./pddlRunner/domains/planetary.pddl'
 def run_json(str_problem):
   json_problem=json.loads(str_problem)
   problem_name=json_problem['name']
+  if not os.path.exists(f'{head_path}{problem_name}'):
+    os.makedirs(f'{head_path}{problem_name}')
+  with open(f'{head_path}{problem_name}/{problem_name}.json', 'w+') as problem_file:
+    problem_file.write(repr(str_problem)[2:-1])
   path_planner, prob=create_problem (json_problem, problem_name)
   execution=run_pddl(problem_name)
-  execution_parser.parse_execution(problem_name, execution, path_planner, prob.points)
+  out=execution_parser.parse_execution(problem_name, execution, path_planner, prob.points)
+  print(out)
+  print('Execution compled!!!')
+  return out
 
 def run_pddl (problem_name):
   running_process = subprocess.Popen(f"optic-clp {domain_path} {head_path}{problem_name}{problem_path}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
@@ -50,7 +57,7 @@ def run_pddl (problem_name):
       
 
 def create_problem (parsed_problem_description, output):
-  path_planner = distances_calculator.distances_calculator( parsed_problem_description['pathPlan']['grid_size'], parsed_problem_description['pathPlan']['algorithm'], parsed_problem_description['pathPlan']['heuristic'], parsed_problem_description['pathPlan']['scale'])
+  path_planner = distances_calculator.distances_calculator(parsed_problem_description['image'], parsed_problem_description['pathPlan']['grid_size'], parsed_problem_description['pathPlan']['algorithm'], parsed_problem_description['pathPlan']['heuristic'], parsed_problem_description['pathPlan']['scale'])
   prob = problem.problem(parsed_problem_description,path_planner)
   if not os.path.exists(f'{head_path}{output}'):
     os.makedirs(f'{head_path}{output}')

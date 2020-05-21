@@ -9,5 +9,6 @@ ENV PATH ${root}/bin:${PATH}
 WORKDIR ${root}/src
 
 RUN pip install -r PathPlanPrinter/requirements.txt
+RUN pip install -r server/requirements.txt
 
-CMD [ "python", "pddlRunner/src/run_pddl.py" ]
+CMD [ "python", "server/server.py" ]

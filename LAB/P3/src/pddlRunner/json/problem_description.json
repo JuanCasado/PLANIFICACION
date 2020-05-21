@@ -35,5 +35,6 @@
     "algorithm":"A*",
     "heuristic":"manhattan",
     "scale":1.001
-  }
+  },
+  "image": "map.png"
 }

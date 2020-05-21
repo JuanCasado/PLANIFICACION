@@ -8,7 +8,8 @@ from run_path_planning import run_path_planning
 
 class distances_calculator:
 
-  def __init__(self, grid_size, algorithm, heuristic, scale,safety_distance=2):
+  def __init__(self, image, grid_size, algorithm, heuristic, scale,safety_distance=2):
+    self.image=image
     self.algorithm=algorithm
     self.heuristic=heuristic
     self.scale=scale
@@ -82,6 +83,6 @@ class distances_calculator:
           self.make_distance(task1,task2)
 
   def run (self, start, end, out=None):
-    path, self.map_size = run_path_planning('./PathPlanPrinter/res/test_2.png', None, self.grid_size, self.algorithm, self.heuristic, self.scale, start, end, out)
+    path, self.map_size = run_path_planning(f'./PathPlanPrinter/res/{self.image}', None, self.grid_size, self.algorithm, self.heuristic, self.scale, start, end, out)
     return path
     
