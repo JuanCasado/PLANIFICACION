@@ -14,7 +14,7 @@ The planner also takes care of recharging the robots batteries.
 
 The code included a website to help building the plans, execute them and help their exploration.
 
-Docker is the only requirement for executing this program [Download link](https://www.docker.com/get-started) 
+Docker is the only requirement for executing this program [Download link](https://www.docker.com/get-started)
 download it for your platform and follow installation instructions.
 
 * Map images are expected at [./src/PathPlanPrinter/res](./src/PathPlanPrinter/res)

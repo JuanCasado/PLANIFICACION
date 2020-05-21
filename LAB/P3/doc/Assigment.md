@@ -169,6 +169,32 @@ done
 | Chebyshev | ![./task7Path-A*-chebyshev.png](./task7Path-A*-chebyshev.png)   | ![./task7Path-theta-chebyshev.png](./task7Path-theta-chebyshev.png)   | 52             |
 | Octile    | ![./task7Path-A*-octile.png](./task7Path-A*-octile.png)         | ![./task7Path-theta-octile.png](./task7Path-theta-octile.png)         | 47             |
 
+When A* uses Dijkstra heuristic and scale of 1 it produces exactly the same output as Dijkstra algorithm.
+
+The characteristics of each heuristic can clearly be seen on the images:
+
+* **Manhattan** prefers straight lines over diagonals since it consider them as equal distance. L shape path are prone to be obtained
+* **Euclidean** on the other hand prefers diagonals since from its point of view are the shorter path.
+* **Chebyshev** prefers direct paths that go straight to the goal even though that can make it explore more nodes.
+* **Octile** it is between euclidean and chebyshev, for grid maps with limited movements and few obstacles it is preferred over the others.
+
 ## Integration
 
+The integration has been implemented in a slightly different way as the proposed one.
+See [../README.md](../README.md) for more information.
+To avoid problems it is recommended to download [Docker](https://www.docker.com/get-started) and use the web interface on [http://localhost:80](http://localhost:80) to use the integration part.
 
+Also installing every dependency manually:
+
+* numpy and PIL for the path planner
+* optic for the pddl runner
+
+and running:
+
+```bash
+python pddlRunner/src/run_pddl.py
+```
+
+from the [../src](../src) directory will do the trick.
+
+More detailed instructions on how to run everything local (including the web server) can be found on [../Dockerfile](../Dockerfile) file.
